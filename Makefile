@@ -13,7 +13,7 @@ ALL = hello
 all: ${ALL}
 
 clean:
-	rm -rf ${ALL} *.o *.dat
+	rm -rf ${ALL} *.o
 
 install:
 	cp ${ALL} ./bin
@@ -21,6 +21,6 @@ install:
 %.o: %.c
 	${CC} ${CFLAG} -c $^ -o $@
 
-hello: hello.o
+hello: hello.o priority_queue.o
 	${CC} ${CFLAG} $^ -o $@
 
