@@ -2,6 +2,18 @@
 #include <stdlib.h>
 #include "priority_queue.h"
 
+int PQ_Print(Priority_Queue pstrPQ)
+{
+	int s32i;
+	printf("(Size, Capacity) = (%4d, %4d)\n", pstrPQ->s32Size, pstrPQ->s32Capacity);
+	printf("Dumb: %4d\n", pstrPQ->pstrEleList[0]);
+	for(s32i = 1; s32i <= pstrPQ->s32Size; s32i++)
+	{
+		printf("%4d", pstrPQ->pstrEleList[s32i]);
+	}
+	printf("\n");
+	return 0;
+}
 
 Priority_Queue PQ_Init(int s32MaxSize)
 {
@@ -20,7 +32,7 @@ Priority_Queue PQ_Init(int s32MaxSize)
 
 	pstrRet->s32Capacity = s32MaxSize;
 	pstrRet->s32Size = 0;
-	pstrRet->pstrEleList[0].s32Key = MAX_DATA;
+	pstrRet->pstrEleList[0] = MAX_DATA;
 	return pstrRet;
 }
 
@@ -47,11 +59,11 @@ int PQ_IsFull(Priority_Queue pstrPQ)
 {
 	if(pstrPQ->s32Size < pstrPQ->s32Capacity)
 	{
-		return 1;
+		return 0;
 	}
 	else
 	{
-		return 0;
+		return 1;
 	}
 }
 
@@ -64,13 +76,12 @@ int PQ_Insert(Priority_Queue pstrPQ, ElementType strX)
 		return -1;
 	}
 
-	for(s32i = pstrPQ->s32Size; pstrPQ->pstrEleList[s32i / 2].s32Key < strX.s32Key; s32i /= 2)
+	pstrPQ->s32Size++;
+	for(s32i = pstrPQ->s32Size; pstrPQ->pstrEleList[s32i / 2] < strX; s32i /= 2)
 	{
 		pstrPQ->pstrEleList[s32i] = pstrPQ->pstrEleList[s32i / 2];
 	}
 	pstrPQ->pstrEleList[s32i] = strX;
-	pstrPQ->s32Size++;
-
 	return 0;
 }
 
@@ -84,20 +95,21 @@ int PQ_DeleteMax(Priority_Queue pstrPQ)
 		return -1;
 	}
 
-	strLastElement = pstrPQ->pstrEleList[pstrPQ->s32Size - 1];
+	strLastElement = pstrPQ->pstrEleList[pstrPQ->s32Size];
+	pstrPQ->s32Size--;
 
 	for(s32i = 1; s32i * 2 <= pstrPQ->s32Size; s32i = s32Child)
 	{
 		s32Child = s32i * 2;
 		if( s32Child != pstrPQ->s32Size
-		&& (pstrPQ->pstrEleList[s32Child + 1].s32Key > pstrPQ->pstrEleList[s32Child].s32Key)
+		&& (pstrPQ->pstrEleList[s32Child + 1] > pstrPQ->pstrEleList[s32Child])
 		  )
 		{
 			s32Child++;
 		}
 
 		/* Percolate one level */
-		if(strLastElement.s32Key < pstrPQ->pstrEleList[s32Child].s32Key)
+		if(strLastElement < pstrPQ->pstrEleList[s32Child])
 		{
 			pstrPQ->pstrEleList[s32i] = pstrPQ->pstrEleList[s32Child];
 		}
@@ -108,7 +120,7 @@ int PQ_DeleteMax(Priority_Queue pstrPQ)
 	}
 
 	pstrPQ->pstrEleList[s32i] = strLastElement;
-	pstrPQ->s32Size--;
+
 	return 0;
 }
 
