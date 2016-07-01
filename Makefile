@@ -1,14 +1,13 @@
 INCLUDE_DIR := ./inc
 SRC_PATH := ./src
-CFLAG = -I${INCLUDE_DIR}
+CFLAG = -I${INCLUDE_DIR} -Wall -O2
 CC = /usr/bin/gcc
-LDLIBS = -lm
+LDLIBS = -lm -lrt
 
 vpath %.c ${SRC_PATH}
 
-
 .PHONY: all clean install
-ALL = hello 
+ALL = base_task_linux
 
 all: ${ALL}
 
@@ -21,6 +20,9 @@ install:
 %.o: %.c
 	${CC} ${CFLAG} -c $^ -o $@
 
-hello: hello.o priority_queue.o
-	${CC} ${CFLAG} $^ -o $@
+base_task_linux: base_task_linux.o tracing.o
+	${CC} ${CFLAG} $^ ${LDLIBS} -o $@
 
+Exp001: base_task_linux
+	cscope -Rb
+	cp base_task_linux /home/NFS_Share/ModeManagerBins/Exp001/Bin
