@@ -14,6 +14,7 @@
 #include <pthread.h>
 #include <ctype.h>
 
+#include "calibration.h"
 #include "tracing.h"
 
 
@@ -33,20 +34,43 @@ int period = 0;                 /* period (we assume deadline equals period) */
 long long duration = 0;         /* task execution duration */
 int priority = 0;               /* task priority */
 int count = 0;                  /* number of jobs to execute (duration / period) */
+int gs32looptime = 0;
 volatile int32_t gs32JobID = 0;  /* job index */
 int32_t gs32PID;
 uint16_t gu16RefID;
 char gacFileName[100];
 
+int mapwcet2looptime(int s32wcet)
+{
+	int s32looptime;
+	if(s32wcet <= 0)
+	{
+		s32looptime = 0;
+	}
+	else if(s32wcet <= 52)
+	{
+		s32looptime = (int)(s32wcet / 2.6) + 1;
+	}
+	else if(s32wcet <= 10000)
+	{
+		s32looptime = (int)((9280.0 / 898.0 * s32wcet) - 516.38);
+	}
+	else
+	{
+		s32looptime = s32wcet / 10 + 1;
+	}
+
+	return s32looptime;
+}
 /*
  * 1ms workload on a specific machine
  * You need to tune this value or change workload
  */
-static inline void workload_for_1ms(void) {
+static inline void workload_for_100us(void) {
     volatile double d64temp = 0.0;
     int64_t s64i;
 
-   	for (s64i = 0; s64i < 162000; s64i++ )
+   	for (s64i = 0; s64i < WORKLOAD_QUANTUM; s64i++ )
 	{
        	d64temp = sqrt((double)s64i * s64i);
 		d64temp = d64temp;
@@ -77,9 +101,9 @@ static void work(int sig, siginfo_t *extra, void *cruft)
     /*  After we get all these Information      */
 
 	add_record_task(TASK_EVENT_START_JOB,  gu16RefID, gs32PID, gs32JobID);
-    for (s32i = 0; s32i < wcet; s32i++)
+    for (s32i = 0; s32i < gs32looptime; s32i++)
 	{
-        workload_for_1ms();
+        workload_for_100us();
     }
 	/* TBD Record JobID & FinishTime */
 	add_record_task(TASK_EVENT_FINISH_JOB, gu16RefID, gs32PID, gs32JobID);
@@ -144,6 +168,8 @@ int main(int argc, char *argv[])
 	count =		atoi(argv[3]);
 	priority =  atoi(argv[4]);
 	gu16RefID = atoi(argv[5]);
+
+	gs32looptime = mapwcet2looptime(wcet);
 
 	if(argc != 6)
 	{

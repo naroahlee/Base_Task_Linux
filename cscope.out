@@ -1,4 +1,42 @@
-cscope 15 /home/lihaoran/Xen/Program/Base_Task_Linux               0000475029
+cscope 15 /home/lihaoran/Xen/Program/Base_Task_Linux               0000479600
+	@inc/calibration.h
+
+2 #i‚de‡
+__CALIBRATION_H__
+
+
+3 
+	#__CALIBRATION_H__
+
+
+	)
+
+5 
+	#WORKLOAD_QUANTUM
+ (12000)
+
+	)
+
+7 
+	sªc‹d_hódî_t
+
+
+9 
+öt32_t
+ 
+	ms32Q˙t
+;
+
+10 
+öt32_t
+ 
+	ms32˙t
+;
+
+11 } 
+	tªc‹d_hódî
+;
+
 	@inc/tracing.h
 
 2 #i‚de‡
@@ -462,72 +500,134 @@ s32ID
 >
 
 17 
+	~"ˇlibøti⁄.h
+"
+
+18 
 	~"åacög.h
 "
 
-31 
+32 
 	gw˚t
  = 0;
 
-32 
+33 
 	g≥riod
  = 0;
 
-33 
+34 
 	gduøti⁄
  = 0;
 
-34 
+35 
 	g¥i‹ôy
  = 0;
 
-35 
+36 
 	gcou¡
  = 0;
 
-36 vﬁ©ûê
+37 
+	ggs32lo›time
+ = 0;
+
+38 vﬁ©ûê
 öt32_t
  
 	ggs32JobID
  = 0;
 
-37 
+39 
 öt32_t
  
 	ggs32PID
 ;
 
-38 
+40 
 uöt16_t
  
 	ggu16RefID
 ;
 
-39 
+41 
 	ggacFûeName
 [100];
 
-45 
+43 
+	$m≠w˚t2lo›time
+(
+s32w˚t
+)
+
+45 
+s32lo›time
+;
+
+46 if(
+s32w˚t
+ <= 0)
+
+48 
+s32lo›time
+ = 0;
+
+50 if(
+s32w˚t
+ <= 52)
+
+52 
+s32lo›time
+ = ()(
+s32w˚t
+ / 2.6) + 1;
+
+54 if(
+s32w˚t
+ <= 10000)
+
+56 
+s32lo›time
+ = ()((9280.0 / 898.0 * 
+s32w˚t
+) - 516.38);
+
+60 
+s32lo›time
+ = 
+s32w˚t
+ / 10 + 1;
+
+63  
+s32lo›time
+;
+
+64 
+	}
+}
+
+69 
 ölöe
  
-	$w‹klﬂd_f‹_1ms
+	$w‹klﬂd_f‹_100us
 () {
 
-46 vﬁ©ûê
+70 vﬁ©ûê
 d64ãmp
  = 0.0;
 
-47 
+71 
 öt64_t
  
 s64i
 ;
 
-49 
+73 
 s64i
- = 0; s64i < 162000; s64i++ )
+ = 0; s64ò< 
+WORKLOAD_QUANTUM
+; s64i++ )
 
-51 
+75 
 d64ãmp
  = 
 	`sqπ
@@ -535,15 +635,15 @@ d64ãmp
 s64i
  * s64i);
 
-52 
+76 
 d64ãmp
  = d64temp;
 
-55 
+79 
 	}
 }
 
-61 
+85 
 	$w‹k
 (
 sig
@@ -555,29 +655,29 @@ exåa
 ¸u·
 )
 
-63 
+87 
 öt32_t
  
 s32i
 ;
 
-66 i‡(
+90 i‡(
 cou¡
  !0 && 
 gs32JobID
  >= count) {
 
-67 
+91 
 	`dump_åacög_to_fûe
 (
 gacFûeName
 );
 
-69 
+93 
 	`exô
 (1);
 
-79 
+103 
 	`add_ªc‹d_èsk
 (
 TASK_EVENT_START_JOB
@@ -589,17 +689,17 @@ gs32PID
 gs32JobID
 );
 
-80 
+104 
 s32i
  = 0; s32ò< 
-w˚t
+gs32lo›time
 ; s32i++)
 
-82 
-	`w‹klﬂd_f‹_1ms
+106 
+	`w‹klﬂd_f‹_100us
 ();
 
-85 
+109 
 	`add_ªc‹d_èsk
 (
 TASK_EVENT_FINISH_JOB
@@ -611,15 +711,15 @@ gs32PID
 gs32JobID
 );
 
-87 
+111 
 gs32JobID
 ++;
 
-90 
+114 
 	}
 }
 
-93 
+117 
 	$exô_dump
 (
 sig
@@ -631,47 +731,47 @@ exåa
 ¸u·
 )
 
-95 
+119 
 	`¥ötf
 ("SIGINT Rcved! Dump File\n");
 
-96 
+120 
 	`dump_åacög_to_fûe
 (
 gacFûeName
 );
 
-98 
+122 
 	`exô
 (1);
 
-100 
+124 
 	}
 }
 
-106 
+130 
 	$£t_˝uafföôy
 ()
 
-108 
+132 
 ˝u_£t_t
  
 mask
 ;
 
-109 
+133 
 	`CPU_ZERO
 (&
 mask
 );
 
-110 
+134 
 	`CPU_SET
 (0, &
 mask
 );
 
-111 i‡(
+135 i‡(
 	`sched_£èfföôy
 (0, (
 ˝u_£t_t
@@ -679,31 +779,31 @@ mask
 mask
 ) < 0)
 
-113 
+137 
 	`≥º‹
 ("sched_setaffinity");
 
-114 
+138 
 	`exô
 (
 EXIT_FAILURE
 );
 
-117 
+141 
 	}
 }
 
-120 
+144 
 	$£t_sched
 ()
 
-123 
+147 
 sched_∑øm
  
 sched
 ;
 
-124 
+148 
 sched
 .
 sched_¥i‹ôy
@@ -711,7 +811,7 @@ sched_¥i‹ôy
 ¥i‹ôy
 ;
 
-125 i‡(
+149 i‡(
 	`sched_£tscheduÀr
 (
 	`gëpid
@@ -721,21 +821,21 @@ SCHED_FIFO
 sched
 ) < 0)
 
-127 
+151 
 	`≥º‹
 ("sched_setscheduler");
 
-128 
+152 
 	`exô
 (
 EXIT_FAILURE
 );
 
-131 
+155 
 	}
 }
 
-133 
+157 
 	$maö
 (
 ¨gc
@@ -743,43 +843,43 @@ EXIT_FAILURE
 ¨gv
 [])
 
-135 
+159 
 siga˘i⁄
  
 ß
 ;
 
-136 
+160 
 sig£t_t
  
 Ælsigs
 ;
 
-137 
+161 
 ôimî•ec
  
 timî•ec
 ;
 
-138 
+162 
 time•ec
  
 now
 ;
 
-139 
+163 
 timî_t
  
 timî
 ;
 
-140 
+164 
 sigevít
  
 timî_evít
 ;
 
-142 
+166 
 w˚t
  = 
 	`©oi
@@ -787,7 +887,7 @@ w˚t
 ¨gv
 [1]);
 
-143 
+167 
 ≥riod
  = 
 	`©oi
@@ -795,7 +895,7 @@ w˚t
 ¨gv
 [2]);
 
-144 
+168 
 cou¡
  = 
 	`©oi
@@ -803,7 +903,7 @@ cou¡
 ¨gv
 [3]);
 
-145 
+169 
 ¥i‹ôy
  = 
 	`©oi
@@ -811,7 +911,7 @@ cou¡
 ¨gv
 [4]);
 
-146 
+170 
 gu16RefID
  = 
 	`©oi
@@ -819,27 +919,35 @@ gu16RefID
 ¨gv
 [5]);
 
-148 if(
+172 
+gs32lo›time
+ = 
+	`m≠w˚t2lo›time
+(
+w˚t
+);
+
+174 if(
 ¨gc
  != 6)
 
-150 
+176 
 	`Ârötf
 (
 °dîr
 , "Argu ERROR!\n");
 
-151 
+177 
 	`exô
 (
 EXIT_FAILURE
 );
 
-154 
+180 
 	`¥ötf
 ("Task[%d] wcet[%d]Öeriod[%d] count[%d]Öriority[%d]\n",
 
-155 
+181 
 gu16RefID
 , 
 w˚t
@@ -851,7 +959,7 @@ cou¡
 ¥i‹ôy
 );
 
-157 
+183 
 	`•rötf
 (
 gacFûeName
@@ -859,21 +967,21 @@ gacFûeName
 gu16RefID
 );
 
-159 
+185 
 	`£t_sched
 ();
 
-162 
+188 
 	`öô_åacög
 ();
 
-163 
+189 
 gs32PID
  = 
 	`gëpid
 ();
 
-166 
+192 
 	`sigem±y£t
 (&
 ß
@@ -881,7 +989,7 @@ gs32PID
 ß_mask
 );
 
-167 
+193 
 ß
 .
 ß_Êags
@@ -889,7 +997,7 @@ gs32PID
 SA_SIGINFO
 ;
 
-168 
+194 
 ß
 .
 ß_siga˘i⁄
@@ -897,7 +1005,7 @@ SA_SIGINFO
 w‹k
 ;
 
-170 i‡(
+196 i‡(
 	`siga˘i⁄
 (
 SIGRTMIN
@@ -907,17 +1015,17 @@ SIGRTMIN
 NULL
 ) < 0) {
 
-171 
+197 
 	`≥º‹
 ("sigactionÉrror");
 
-172 
+198 
 	`exô
 (
 EXIT_FAILURE
 );
 
-176 
+202 
 	`sigem±y£t
 (&
 ß
@@ -925,7 +1033,7 @@ EXIT_FAILURE
 ß_mask
 );
 
-177 
+203 
 ß
 .
 ß_Êags
@@ -933,7 +1041,7 @@ EXIT_FAILURE
 SA_SIGINFO
 ;
 
-178 
+204 
 ß
 .
 ß_siga˘i⁄
@@ -941,7 +1049,7 @@ SA_SIGINFO
 exô_dump
 ;
 
-180 i‡(
+206 i‡(
 	`siga˘i⁄
 (
 SIGINT
@@ -951,23 +1059,23 @@ SIGINT
 NULL
 ) < 0) {
 
-181 
+207 
 	`≥º‹
 ("sigactionÉrror");
 
-182 
+208 
 	`exô
 (
 EXIT_FAILURE
 );
 
-186 
+212 
 	`øi£
 (
 SIGSTOP
 );
 
-189 
+215 
 timî•ec
 .
 ô_öãrvÆ
@@ -977,7 +1085,7 @@ tv_£c
 ≥riod
  / 1000;
 
-191 
+217 
 timî•ec
 .
 ô_öãrvÆ
@@ -987,7 +1095,7 @@ tv_n£c
 ≥riod
  % 1000) * 1000000;
 
-195 if(
+221 if(
 	`˛ock_gëtime
 (
 CLOCK_REALTIME
@@ -995,17 +1103,17 @@ CLOCK_REALTIME
 now
 ) < 0) {
 
-196 
+222 
 	`≥º‹
 ("clock_gettime");
 
-197 
+223 
 	`exô
 (
 EXIT_FAILURE
 );
 
-201 
+227 
 	`add_ªc‹d_èsk
 (
 TASK_EVENT_SET_TIMER
@@ -1015,7 +1123,7 @@ gu16RefID
 gs32PID
 , 0);
 
-202 
+228 
 timî•ec
 .
 ô_vÆue
@@ -1025,7 +1133,7 @@ tv_£c
 now
 .tv_sec + 1;
 
-204 
+230 
 timî•ec
 .
 ô_vÆue
@@ -1035,7 +1143,7 @@ tv_n£c
 now
 .tv_nsec;
 
-206 
+232 
 timî_evít
 .
 sigev_nŸify
@@ -1043,7 +1151,7 @@ sigev_nŸify
 SIGEV_SIGNAL
 ;
 
-207 
+233 
 timî_evít
 .
 sigev_signo
@@ -1051,7 +1159,7 @@ sigev_signo
 SIGRTMIN
 ;
 
-208 
+234 
 timî_evít
 .
 sigev_vÆue
@@ -1061,7 +1169,7 @@ sivÆ_±r
 timî
 ;
 
-210 i‡(
+236 i‡(
 	`timî_¸óã
 (
 CLOCK_REALTIME
@@ -1071,17 +1179,17 @@ timî_evít
 timî
 ) < 0) {
 
-211 
+237 
 	`≥º‹
 ("timer_create");
 
-212 
+238 
 	`exô
 (
 EXIT_FAILURE
 );
 
-215 i‡(
+241 i‡(
 	`timî_£âime
 (
 timî
@@ -1093,35 +1201,835 @@ timî•ec
 NULL
 ) < 0) {
 
-216 
+242 
 	`≥º‹
 ("timer_settime");
 
-217 
+243 
 	`exô
 (
 EXIT_FAILURE
 );
 
-220 
+246 
 	`sigem±y£t
 (&
 Ælsigs
 );
 
-225 
+251 
 	`sigsu•íd
 (&
 Ælsigs
 );
 
-228 
+254 
 	`exô
 (
 EXIT_SUCCESS
 );
 
-229 
+255 
+	}
+}
+
+	@src/calibration.c
+
+1 
+	#_GNU_SOURCE
+
+
+	)
+
+2 
+	~<°dio.h
+>
+
+3 
+	~<°dlib.h
+>
+
+4 
+	~<°döt.h
+>
+
+5 
+	~<sys/time.h
+>
+
+6 
+	~<uni°d.h
+>
+
+7 
+	~<sig«l.h
+>
+
+8 
+	~<time.h
+>
+
+9 
+	~<sched.h
+>
+
+10 
+	~<°dlib.h
+>
+
+11 
+	~<m©h.h
+>
+
+12 
+	~<as£π.h
+>
+
+13 
+	~<°rög.h
+>
+
+14 
+	~<±hªad.h
+>
+
+15 
+	~<˘y≥.h
+>
+
+16 
+	~"ˇlibøti⁄.h
+"
+
+18 #ifde‡
+__x86_64__
+
+
+19 
+__ölöe__
+ 
+uöt64_t
+ 
+	$rdts˝
+()
+
+21 
+uöt32_t
+ 
+hi
+, 
+lo
+;
+
+22 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("rdts˝" : "˜"(
+lo
+), "=d"(
+hi
+));
+
+24 ((
+uöt64_t
+)
+lo
+) |
+
+25 (((
+uöt64_t
+)
+hi
+) << 32)
+
+27 
+	}
+}
+
+36 
+ölöe
+ 
+	$w‹klﬂd_qu™tum
+() {
+
+37 vﬁ©ûê
+d64ãmp
+ = 0.0;
+
+38 
+öt64_t
+ 
+s64i
+;
+
+39 
+s64i
+ = 0; s64ò< 
+WORKLOAD_QUANTUM
+; s64i++)
+
+41 
+d64ãmp
+ = 
+	`sqπ
+(()
+s64i
+ * s64i);
+
+42 
+d64ãmp
+ = d64temp;
+
+45 
+	}
+}
+
+47 
+uöt64_t
+ 
+	$do_Exp_⁄˚
+(
+öt32_t
+ 
+s32Q˙t
+)
+
+49 
+uöt64_t
+ 
+u64°¨t
+;
+
+50 
+uöt64_t
+ 
+u64íd
+;
+
+51 
+s32i
+;
+
+52 
+u64°¨t
+ = 
+	`rdts˝
+();
+
+53 
+s32i
+ = 0; s32ò< 
+s32Q˙t
+; s32i++)
+
+55 
+	`w‹klﬂd_qu™tum
+();
+
+57 
+u64íd
+ = 
+	`rdts˝
+();
+
+58  (
+u64íd
+ - 
+u64°¨t
+);
+
+59 
+	}
+}
+
+72 
+	$£t_˝uafföôy
+()
+
+74 
+˝u_£t_t
+ 
+mask
+;
+
+75 
+	`CPU_ZERO
+(&
+mask
+);
+
+76 
+	`CPU_SET
+(0, &
+mask
+);
+
+77 i‡(
+	`sched_£èfföôy
+(0, (
+˝u_£t_t
+), &
+mask
+) < 0)
+
+79 
+	`≥º‹
+("sched_setaffinity");
+
+80 
+	`exô
+(
+EXIT_FAILURE
+);
+
+83 
+	}
+}
+
+86 
+	$£t_sched
+(
+öt32_t
+ 
+s32¥io
+)
+
+89 
+sched_∑øm
+ 
+sched
+;
+
+90 
+sched
+.
+sched_¥i‹ôy
+ = 
+s32¥io
+;
+
+91 i‡(
+	`sched_£tscheduÀr
+(
+	`gëpid
+(), 
+SCHED_FIFO
+, &
+sched
+) < 0)
+
+93 
+	`≥º‹
+("sched_setscheduler");
+
+94 
+	`exô
+(
+EXIT_FAILURE
+);
+
+97 
+	}
+}
+
+99 
+	$maö
+(
+¨gc
+, *
+¨gv
+[])
+
+101 
+FILE
+* 
+fout
+;
+
+102 
+öt32_t
+ 
+s32˙t
+;
+
+103 
+öt32_t
+ 
+s32Q˙t
+;
+
+104 
+öt32_t
+ 
+s32¥io
+;
+
+105 
+s32i
+;
+
+106 
+uöt64_t
+ 
+u64Execuã
+;
+
+107 
+acOuçut
+[60] = "";
+
+108 
+uöt64_t
+* 
+pu64ªc
+;
+
+109 
+ªc‹d_hódî
+ 
+°rRec
+;
+
+111 if(
+¨gc
+ != 5)
+
+113 
+	`Ârötf
+(
+°dîr
+, "Useage: ./calibration Samples Qcnt Prio OutputFile!\n");
+
+114 
+	`exô
+(
+EXIT_FAILURE
+);
+
+117 
+s32˙t
+ = 
+	`©oi
+(
+¨gv
+[1]);
+
+118 
+s32Q˙t
+ = 
+	`©oi
+(
+¨gv
+[2]);
+
+119 
+s32¥io
+ = 
+	`©oi
+(
+¨gv
+[3]);
+
+120 
+	`°r˝y
+(
+acOuçut
+, 
+¨gv
+[4]);
+
+122 
+fout
+ = 
+	`f›í
+(
+acOuçut
+, "wb");
+
+123 if(
+NULL
+ =
+fout
+)
+
+125 
+	`Ârötf
+(
+°dîr
+, "O≥¿%†Eº‹!\n", 
+acOuçut
+);
+
+126 
+	`exô
+(
+EXIT_FAILURE
+);
+
+129 
+	`¥ötf
+("Qcnt[%d] Prio[%d] Sample[%d]\n",
+
+130 
+s32Q˙t
+, 
+s32¥io
+, 
+s32˙t
+);
+
+132 
+°rRec
+.
+s32Q˙t
+ = s32Qcnt;
+
+133 
+°rRec
+.
+s32˙t
+ = s32cnt;
+
+136 
+pu64ªc
+ = (
+uöt64_t
+*)
+	`mÆloc
+((uöt64_tË* 
+s32˙t
+);
+
+137 if(
+NULL
+ =
+pu64ªc
+)
+
+139 
+	`Ârötf
+(
+°dîr
+, "malloc Error!\n");
+
+140 
+	`exô
+(
+EXIT_FAILURE
+);
+
+144 
+	`fwrôe
+(&
+°rRec
+, (
+ªc‹d_hódî
+), 1, 
+fout
+);
+
+147 
+	`£t_sched
+(
+s32¥io
+);
+
+149 
+s32i
+ = 0; s32ò< 
+s32˙t
+; s32i++)
+
+151 
+u64Execuã
+ = 
+	`do_Exp_⁄˚
+(
+s32Q˙t
+);
+
+152 
+pu64ªc
+[
+s32i
+] = 
+u64Execuã
+;
+
+155 
+	`fwrôe
+(
+pu64ªc
+, (
+uöt64_t
+), 
+s32˙t
+, 
+fout
+);
+
+157 
+	`‰ì
+(
+pu64ªc
+);
+
+158 
+	`f˛o£
+(
+fout
+);
+
+159 
+	`exô
+(
+EXIT_SUCCESS
+);
+
+160 
+	}
+}
+
+	@src/stats.c
+
+1 
+	~<°dio.h
+>
+
+2 
+	~<°dlib.h
+>
+
+3 
+	~<°döt.h
+>
+
+4 
+	~<°rög.h
+>
+
+5 
+	~"åacög.h
+"
+
+6 
+	~"ˇlibøti⁄.h
+"
+
+8 
+	$maö
+(
+¨gc
+, * 
+¨gv
+[])
+
+10 
+FILE
+* 
+fö
+;
+
+11 
+ªc‹d_hódî
+ 
+°rRec
+;
+
+12 
+acI≈ut
+[60] = "";
+
+13 
+s32i
+;
+
+14 
+uöt64_t
+* 
+pu64ªc
+;
+
+15 
+d64tŸÆ
+;
+
+16 
+d64ãmp
+;
+
+17 
+d64max
+;
+
+19 
+	`°r˝y
+(
+acI≈ut
+, 
+¨gv
+[1]);
+
+20 
+fö
+ = 
+	`f›í
+(
+acI≈ut
+, "rb");
+
+21 if(
+NULL
+ =
+fö
+)
+
+23 
+	`Ârötf
+(
+°dîr
+, "O≥¿%†Eº‹!\n", 
+acI≈ut
+);
+
+24 
+	`exô
+(
+EXIT_FAILURE
+);
+
+27 
+	`‰ód
+(&
+°rRec
+, (
+ªc‹d_hódî
+), 1, 
+fö
+);
+
+29 
+pu64ªc
+ = (
+uöt64_t
+*)
+	`mÆloc
+((uöt64_tË* 
+°rRec
+.
+s32˙t
+);
+
+30 if(
+NULL
+ =
+pu64ªc
+)
+
+32 
+	`Ârötf
+(
+°dîr
+, "malloc Error!\n");
+
+33 
+	`exô
+(
+EXIT_FAILURE
+);
+
+36 
+	`‰ód
+(
+pu64ªc
+, (
+uöt64_t
+), 
+°rRec
+.
+s32˙t
+, 
+fö
+);
+
+38 
+d64tŸÆ
+ = 0.0;
+
+39 
+d64max
+ = 0.0;
+
+40 
+s32i
+ = 0; s32ò< 
+°rRec
+.
+s32˙t
+; s32i++)
+
+42 
+d64ãmp
+ = (()(
+pu64ªc
+[
+s32i
+]Ë/ 
+KHZ
+);
+
+43 
+d64tŸÆ
+ +
+d64ãmp
+;
+
+44 if(
+d64ãmp
+ >
+d64max
+)
+
+46 
+d64max
+ = 
+d64ãmp
+;
+
+49 
+d64tŸÆ
+ /
+°rRec
+.
+s32˙t
+;
+
+51 
+	`¥ötf
+("%d,%lf,%lf\n", 
+°rRec
+.
+s32Q˙t
+, 
+d64tŸÆ
+, 
+d64max
+);
+
+53 
+	`‰ì
+(
+pu64ªc
+);
+
+54 
+	`f˛o£
+(
+fö
+);
+
+56 
 	}
 }
 
@@ -81754,10 +82662,13 @@ __END_DECLS
 .
 1
 /usr/include
-87
-2298
+90
+2346
+inc/calibration.h
 inc/tracing.h
 src/base_task_linux.c
+src/calibration.c
+src/stats.c
 src/tracing.c
 /usr/include/assert.h
 /usr/include/ctype.h
