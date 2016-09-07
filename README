@@ -1,3 +1,25 @@
 This is a simple README.
 useage
 ./base_task_linux Wcet Period Count(Forever==0) Priority ID
+
+
+Calibration Stage 1
+To Determine How many ticks do we have for a CLOCK_REALTIME 1s
+
+Method:
+	1. Ensure we only have one full budget VCPU for the VM
+	2. Ensure this VCPU is pinned to a dedicated PCPU
+	3. using calib_stage1_exp.sh to generate Tracing File.
+	4. using stats_stage1_exp.sh to get the curve
+	5. Change all the MHZ KHZ HZ parameters in tracing.h
+
+Calibration Stage 2
+To Determine the Qcnt ==> Wcet Mapping
+So that we can find the inverse fxn for Wcet ==> Qcnt
+
+Method:
+	0. Determine how many times shall we do sqrt() for consuming 100us
+	1. Ensure we only have one full budget VCPU for the VM
+	2. Ensure this VCPU is pinned to a dedicated PCPU
+	3. using calib_stage2_exp.sh to generate Tracing File.
+	4. using stats_stage2_exp.sh to get the curve

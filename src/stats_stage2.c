@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
 	record_header strRec;
 	char acInput[60] = "";
 	int s32i;
+	int s32ret;
 	uint64_t* pu64rec;
 	double d64total;
 	double d64temp;
@@ -24,7 +25,12 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	fread(&strRec, sizeof(record_header), 1, fin);
+	s32ret = fread(&strRec, sizeof(record_header), 1, fin);
+	if(1 != s32ret)
+	{
+		fprintf(stderr, "fread() Error!\n");
+		exit(-1);
+	}
 
 	pu64rec = (uint64_t*)malloc(sizeof(uint64_t) * strRec.s32cnt);
 	if(NULL == pu64rec)
@@ -33,7 +39,12 @@ int main(int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	fread(pu64rec, sizeof(uint64_t), strRec.s32cnt, fin);
+	s32ret = fread(pu64rec, sizeof(uint64_t), strRec.s32cnt, fin);
+	if(strRec.s32cnt != s32ret)
+	{
+		fprintf(stderr, "fread() Error!\n");
+		exit(-1);
+	}
 
 	d64total = 0.0;
 	d64max  = 0.0;

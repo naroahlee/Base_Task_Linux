@@ -2,7 +2,8 @@
 #ifndef __CALIBRATION_H__ 
 #define __CALIBRATION_H__
 
-#define WORKLOAD_QUANTUM (12000)
+/* For 100us */
+#define WORKLOAD_QUANTUM (5650)
 
 typedef struct record_header_t
 {

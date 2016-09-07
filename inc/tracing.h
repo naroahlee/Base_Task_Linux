@@ -38,9 +38,9 @@
 #define TASK_EVENT_MISS_DEADLINE  (305)
 #define TASK_EVENT_SET_TIMER      (306)
 
-#define HZ                 (3299040000)
-#define KHZ                (3299040)
-#define MHZ                (3299)
+#define HZ                 (2099999999)
+#define KHZ                (2099999)
+#define MHZ                (2099)
 
 typedef int32_t EVENT_ID;
 typedef uint16_t EVENT_TYPE;
