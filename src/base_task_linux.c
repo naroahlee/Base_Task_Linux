@@ -47,17 +47,17 @@ int mapwcet2looptime(int s32wcet)
 	{
 		s32looptime = 0;
 	}
-	else if(s32wcet <= 52)
+	else if(s32wcet <= 84)
 	{
-		s32looptime = (int)(s32wcet / 2.6) + 1;
+		s32looptime = (int)(s32wcet / 2.1) + 1;
 	}
-	else if(s32wcet <= 10000)
+	else if(s32wcet <= 1000)
 	{
-		s32looptime = (int)((9280.0 / 898.0 * s32wcet) - 516.38);
+		s32looptime = (int)((10 * s32wcet) - 800);
 	}
 	else
 	{
-		s32looptime = s32wcet / 10 + 1;
+		s32looptime = s32wcet * 10;
 	}
 
 	return s32looptime;
